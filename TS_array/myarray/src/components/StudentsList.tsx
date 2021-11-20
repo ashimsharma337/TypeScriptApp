@@ -1,15 +1,32 @@
 import { createUseStyles } from "react-jss";
+import Test from "./Test";
+import { useState } from "react";
 
 //Creating  function to use createuseStyle(react-jss)
-const useStyles = createUseStyles({
-     title: {color: "red"},
-});
+const useStyles = createUseStyles(
+    
+    //creating object to add styles
+    {
+     title: {color: "red", fontSize: "20px", fontWeight: "bold"},
+    }
+    );
 
-
+interface IStudentsList {
+    name: string,
+    email: string,
+    phone: string
+}
 
 const StudentsList = () => {
 
     const classes = useStyles();
+
+    const studentsList: IStudentsList[] = [
+        { name: "John", email: "jhn33@email.com", phone: "+448828282" }, 
+        { name: "Martha", email: "martha3434@email.com", phone: "+297393739" } 
+    ];
+
+    const [data, setData] = useState(studentsList);
 
     return (
 
@@ -25,21 +42,22 @@ const StudentsList = () => {
                   </tr>
               </thead>
               <tbody>
-                  <tr>
-                      <td>Peter Russel</td>
-                      <td>peter123@email.com</td>
-                      <td>+7533388733</td>
-                  </tr>
-                  <tr>
-                      <td>John Russel</td>
-                      <td>john23@email.com</td>
-                      <td>+38373ss834</td>
-                  </tr>
+                
+                    {
+                        data.map((student: IStudentsList) => (
+                            <tr>
+                                <td>{student.name}</td>
+                                <td>{student.email}</td>
+                                <td>{student.phone}</td>
+                            </tr>
+                            
+                        ))}
+                 
               </tbody>
           </table>
            
         </div>
-
+        <Test/>
        </>
     )
 }
