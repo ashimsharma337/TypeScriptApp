@@ -2,6 +2,7 @@ import { createUseStyles } from "react-jss";
 import Test from "./Test";
 import { useState } from "react";
 
+
 //Creating  function to use createuseStyle(react-jss)
 const useStyles = createUseStyles(
     
@@ -12,9 +13,10 @@ const useStyles = createUseStyles(
     );
 
 interface IStudentsList {
-    name: string,
-    email: string,
-    phone: string
+    id: any;
+    name: string;
+    email: string;
+    phone: string;
 }
 
 const StudentsList = () => {
@@ -22,11 +24,22 @@ const StudentsList = () => {
     const classes = useStyles();
 
     const studentsList: IStudentsList[] = [
-        { name: "John", email: "jhn33@email.com", phone: "+448828282" }, 
-        { name: "Martha", email: "martha3434@email.com", phone: "+297393739" } 
+        { id: 1, name: "John", email: "jhn33@email.com", phone: "+448828282" }, 
+        { id: 2, name: "Martha", email: "martha3434@email.com", phone: "+297393739" }, 
     ];
 
-    const [data, setData] = useState(studentsList);
+    const [data, setData] = useState(studentsList as IStudentsList[]);
+    const [newData, setNewData] = useState({}   as IStudentsList);
+
+    const handleChange = (event: any) => {
+        console.log(event.target.name, event.target.value);
+        setNewData({ ...newData, [event.target.name]: event.target.value });
+      };
+
+      const handleSave = () => {
+        setData([...data, newData]);
+        setNewData({id: "", name: "", phone: "", email: "" } as IStudentsList);
+      };
 
     return (
 
@@ -36,6 +49,7 @@ const StudentsList = () => {
           <table>
               <thead>
                   <tr>
+                      <th>ID</th>
                       <th>Name</th>
                       <th>Email</th>
                       <th>Phone</th>
@@ -44,8 +58,9 @@ const StudentsList = () => {
               <tbody>
                 
                     {
-                        data.map((student: IStudentsList) => (
+                        data.map((student) => (
                             <tr>
+                                <td>{student.id}</td>
                                 <td>{student.name}</td>
                                 <td>{student.email}</td>
                                 <td>{student.phone}</td>
@@ -55,9 +70,19 @@ const StudentsList = () => {
                  
               </tbody>
           </table>
+          
+              <h2>Add student detail to add a new student</h2>
+              <input type = "text" name ="id" value =  {newData.id } placeholder="Enter ID" onChange = { handleChange  }></input>
+              <input type ="text" name="name" value = { newData.name } placeholder="Enter Name" onChange = { handleChange }></input>
+              <input type ="text" name="email" value = { newData.email } placeholder="Enter email" onChange = { handleChange }></input>
+              <input type ="text" name="phone" value = { newData.phone } placeholder="Enter Phone Number" onChange = { handleChange }></input>
+              <input type ="submit" name="submit" onClick = { handleSave }></input>
+              
+          
            
         </div>
-        <Test/>
+        {/*use following component to see how title 1-2-2 helps in styling element with same classes(title)
+        <Test/>*/}
        </>
     )
 }
