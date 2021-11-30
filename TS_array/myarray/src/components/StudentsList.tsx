@@ -4,13 +4,23 @@ import { useState } from "react";
 
 
 //Creating  function to use createuseStyle(react-jss)
-const useStyles = createUseStyles(
+const useStyles = createUseStyles({
     
     //creating object to add styles
-    {
+    
      title: {color: "red", fontSize: "20px", fontWeight: "bold"},
-    }
-    );
+    
+    
+     table: {borer: "2px solid black", width: "100%"},
+
+     thead: {backgroundColor: "grey", textAlign: "center"},
+
+     tbody: {backgroundColor: "skyblue"},
+
+     tdata: {fontColor: "black", fontSize: "15px", fontWeight: "Bold"}
+    
+   
+    })
 
 interface IStudentsList {
     id: any;
@@ -46,8 +56,8 @@ const StudentsList = () => {
       <>
         <h1 className = {classes.title}>Students List Page</h1>
         <div>
-          <table>
-              <thead>
+          <table className = {classes.table}>
+              <thead className = {classes.thead}>
                   <tr>
                       <th>ID</th>
                       <th>Name</th>
@@ -55,7 +65,7 @@ const StudentsList = () => {
                       <th>Phone</th>
                   </tr>
               </thead>
-              <tbody>
+              <tbody className = {classes.tbody}>
                 
                     {
                         data.map((student) => (
